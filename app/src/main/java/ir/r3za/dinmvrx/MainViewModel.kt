@@ -7,14 +7,16 @@ import com.airbnb.mvrx.Uninitialized
 import ir.r3za.dinmvrx.base.MvRxViewModel
 import ir.r3za.dinmvrx.data.FoodCategory
 import ir.r3za.dinmvrx.data.FoodItem
+import ir.r3za.dinmvrx.data.TopPagerEntity
 import java.math.BigDecimal
 
 data class MainState(
     val categories: Async<List<FoodCategory>> = Uninitialized,
-    val foodList: Async<List<FoodItem>> = Uninitialized
+    val foodList: Async<List<FoodItem>> = Uninitialized,
+    val topPagerEntity: Async<TopPagerEntity> = Uninitialized
 ) : MvRxState
 
-class MainViewModel(val initialState: MainState) : MvRxViewModel<MainState>(initialState) {
+class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainState>(initialState) {
 
     init {
         fetchData()
@@ -23,6 +25,17 @@ class MainViewModel(val initialState: MainState) : MvRxViewModel<MainState>(init
     private fun fetchData() {
         setState {
             initialState.copy(
+                topPagerEntity = Success(
+                    TopPagerEntity(
+                        "Kazarov",
+                        "delivery",
+                        listOf(
+                            "https://www.foodiesfeed.com/wp-content/uploads/2020/11/cooking-pasta-penne-463x695.jpg",
+                            "https://www.foodiesfeed.com/wp-content/uploads/2020/11/small-butter-pumpkin-463x695.jpg",
+                            "https://www.foodiesfeed.com/wp-content/uploads/2020/09/noodle-soup-463x648.jpg"
+                        )
+                    )
+                ),
                 foodList = Success<List<FoodItem>>(
                     listOf<FoodItem>(
                         FoodItem(

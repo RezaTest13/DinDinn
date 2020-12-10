@@ -16,6 +16,7 @@ class ListFragment : BaseFragment() {
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by fragmentViewModel()
     private val adapter = FoodsAdapter()
+    private val pagerAdapter = TopPagerAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,12 +31,21 @@ class ListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rvFoods.layoutManager = LinearLayoutManager(context)
         binding.rvFoods.adapter = adapter
+        binding.viewPagerTop.adapter = pagerAdapter
+
     }
 
     override fun invalidate() {
         withState(viewModel) { state ->
             if (state.foodList.complete) {
                 adapter.updateItems(state.foodList()!!)
+            }
+            if (state.topPagerEntity.complete) {
+                val topPagerEntity = state.topPagerEntity()!!
+                pagerAdapter.updateItems(topPagerEntity.imageUrls)
+                binding.pagerIndicator.setViewPager(binding.viewPagerTop)
+                binding.tvTitle.text = topPagerEntity.title
+                binding.tvSubtitle.text = topPagerEntity.subtitle
             }
         }
     }
