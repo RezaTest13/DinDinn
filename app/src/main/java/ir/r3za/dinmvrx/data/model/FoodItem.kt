@@ -1,4 +1,4 @@
-package ir.r3za.dinmvrx.data
+package ir.r3za.dinmvrx.data.model
 
 import java.math.BigDecimal
 
@@ -7,5 +7,6 @@ data class FoodItem(
     val description: String?,
     val specifications: String?,
     val imageUrl: String,
-    val price: BigDecimal
+    val price: BigDecimal,
+    @Transient var adding: Boolean = false
 )

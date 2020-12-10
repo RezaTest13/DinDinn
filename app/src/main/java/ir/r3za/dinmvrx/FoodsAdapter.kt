@@ -1,10 +1,13 @@
 package ir.r3za.dinmvrx
 
+import android.content.res.ColorStateList
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import ir.r3za.dinmvrx.data.FoodItem
+import ir.r3za.dinmvrx.data.model.FoodItem
 import ir.r3za.dinmvrx.databinding.ItemFoodBinding
 import java.math.BigDecimal
 
@@ -16,6 +19,8 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.FoodsViewHolder>() {
         items.addAll(newItems)
         notifyDataSetChanged()
     }
+
+    var onAddClicked: (FoodItem) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodsViewHolder {
         return FoodsViewHolder(
@@ -33,21 +38,45 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.FoodsViewHolder>() {
         holder.bind(items[position])
     }
 
-    class FoodsViewHolder(val binding: ItemFoodBinding) : RecyclerView.ViewHolder(binding.root) {
-        private lateinit var foodItem: FoodItem
+    inner class FoodsViewHolder(val binding: ItemFoodBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.btnAdd.setOnClickListener {
-
+                val clickedPosition = adapterPosition
+                onAddClicked(items[clickedPosition])
+                items[clickedPosition].adding = true
+                notifyItemChanged(clickedPosition)
+                Handler().postDelayed({
+                    items[clickedPosition].adding = false
+                    notifyItemChanged(clickedPosition)
+                }, 300)
             }
         }
 
         fun bind(item: FoodItem) {
-            foodItem = item
             binding.tvTitle.text = item.name
             binding.tvDescription.text = item.description
             binding.tvIngredients.text = item.specifications
-            binding.btnAdd.text = "${item.price.setScale(1, BigDecimal.ROUND_HALF_UP)} USD"
+            if (item.adding) {
+                binding.btnAdd.text = "added + 1"
+                binding.btnAdd.backgroundTintList = ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                        itemView.context.resources,
+                        R.color.colorGreen,
+                        itemView.context.theme
+                    )
+                )
+            } else {
+                binding.btnAdd.backgroundTintList = ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                        itemView.context.resources,
+                        android.R.color.black,
+                        itemView.context.theme
+                    )
+                )
+                binding.btnAdd.text = "${item.price.setScale(1, BigDecimal.ROUND_HALF_UP)} USD"
+            }
             Glide.with(itemView.context).load(item.imageUrl).into(binding.ivFood)
         }
     }

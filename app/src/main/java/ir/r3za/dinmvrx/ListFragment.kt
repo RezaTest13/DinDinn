@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import ir.r3za.dinmvrx.base.BaseFragment
@@ -29,8 +30,12 @@ class ListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter.onAddClicked = {
+            viewModel.addToCart(it)
+        }
         binding.rvFoods.layoutManager = LinearLayoutManager(context)
         binding.rvFoods.adapter = adapter
+        (binding.rvFoods.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         binding.viewPagerTop.adapter = pagerAdapter
 
     }

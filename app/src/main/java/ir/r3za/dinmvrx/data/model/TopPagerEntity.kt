@@ -1,4 +1,4 @@
-package ir.r3za.dinmvrx.data
+package ir.r3za.dinmvrx.data.model
 
 data class TopPagerEntity(
     val title: String?,

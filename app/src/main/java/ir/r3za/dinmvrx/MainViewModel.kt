@@ -5,15 +5,16 @@ import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.Uninitialized
 import ir.r3za.dinmvrx.base.MvRxViewModel
-import ir.r3za.dinmvrx.data.FoodCategory
-import ir.r3za.dinmvrx.data.FoodItem
-import ir.r3za.dinmvrx.data.TopPagerEntity
+import ir.r3za.dinmvrx.data.ShoppingCart
+import ir.r3za.dinmvrx.data.model.FoodCategory
+import ir.r3za.dinmvrx.data.model.FoodItem
+import ir.r3za.dinmvrx.data.model.TopPagerEntity
 import java.math.BigDecimal
 
 data class MainState(
     val categories: Async<List<FoodCategory>> = Uninitialized,
     val foodList: Async<List<FoodItem>> = Uninitialized,
-    val topPagerEntity: Async<TopPagerEntity> = Uninitialized
+    val topPagerEntity: Async<TopPagerEntity> = Uninitialized,
 ) : MvRxState
 
 class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainState>(initialState) {
@@ -61,6 +62,10 @@ class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainSta
                 )
             )
         }
+    }
+
+    fun addToCart(foodItem: FoodItem) {
+        ShoppingCart.addToCart(foodItem)
     }
 
 }
