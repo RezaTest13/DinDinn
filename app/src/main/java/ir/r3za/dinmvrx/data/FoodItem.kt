@@ -6,5 +6,6 @@ data class FoodItem(
     val name: String,
     val description: String?,
     val specifications: String?,
+    val imageUrl: String,
     val price: BigDecimal
 )

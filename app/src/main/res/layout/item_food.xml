@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="540dp"
+    android:layout_height="466dp"
+    android:layout_margin="@dimen/margin_large"
+    android:theme="@style/Theme.MaterialComponents.Light"
+    app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_large"
             android:ellipsize="end"
-            android:lines="5"
-            android:maxLines="5"
+            android:lines="3"
+            android:maxLines="3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
@@ -52,26 +55,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_large"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button5"
+            app:layout_constraintBottom_toBottomOf="@id/btn_add"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            app:layout_constraintTop_toTopOf="@+id/btn_add"
             tools:text="120 grams, 25 cm" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button5"
-            android:layout_width="88dp"
+            android:id="@+id/btn_add"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_large"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="@dimen/margin_xlarge"
             app:backgroundTint="@android:color/black"
             app:cornerRadius="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tv_ingredients"
             app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            app:rippleColor="@android:color/holo_green_dark"
             tools:text="45 usd" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
