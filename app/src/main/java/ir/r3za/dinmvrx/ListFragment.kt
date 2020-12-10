@@ -45,6 +45,11 @@ class ListFragment : BaseFragment() {
             if (state.foodList.complete) {
                 adapter.updateItems(state.foodList()!!)
             }
+            if (state.topLoading) {
+                binding.pbTop.visibility = View.VISIBLE
+            } else {
+                binding.pbTop.visibility = View.GONE
+            }
             if (state.topPagerEntity.complete) {
                 val topPagerEntity = state.topPagerEntity()!!
                 pagerAdapter.updateItems(topPagerEntity.imageUrls)

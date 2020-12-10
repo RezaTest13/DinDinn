@@ -2,6 +2,7 @@ package ir.r3za.dinmvrx.data
 
 import ir.r3za.dinmvrx.data.model.FoodItem
 
+//TODO it's better to provide with DI in real project
 object ShoppingCart {
     private val cartMap: MutableMap<FoodItem, Int> = mutableMapOf()
 
