@@ -57,6 +57,18 @@ class ListFragment : BaseFragment() {
                 binding.tvTitle.text = topPagerEntity.title
                 binding.tvSubtitle.text = topPagerEntity.subtitle
             }
+            if (state.categories.complete) {
+                if (binding.tabCategories.tabCount >= 1) {
+                    return@withState
+                }
+                state.categories()!!.forEach { foodCategory ->
+                    binding.tabCategories.addTab(
+                        binding.tabCategories.newTab()
+                            .setText(foodCategory.title)
+                            .setTag(foodCategory.id)
+                    )
+                }
+            }
         }
     }
 

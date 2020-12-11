@@ -39,6 +39,10 @@ class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainSta
             copy(foodList = it)
         }
 
+        Repository.getFoodCategories().execute {
+            copy(categories = it)
+        }
+
     }
 
     fun addToCart(foodItem: FoodItem) {

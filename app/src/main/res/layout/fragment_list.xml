@@ -12,6 +12,8 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="@android:color/white"
+            app:scrimVisibleHeightTrigger="40dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.viewpager2.widget.ViewPager2
@@ -68,12 +70,28 @@
                     app:ci_gravity="center"
                     app:layout_constraintBottom_toTopOf="@id/card_bottom_view" />
 
-                <View
+                <FrameLayout
                     android:id="@+id/card_bottom_view"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/shape_top_radius_white"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_categories"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:paddingStart="@dimen/margin_normal"
+                        android:clipToPadding="false"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabMode="scrollable"
+                        app:tabRippleColor="@null"
+                        app:tabTextColor="@color/neutral_400"
+                        app:tabSelectedTextColor="@android:color/black"
+                        app:tabTextAppearance="@style/CustomTabText"/>
+
+                </FrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
