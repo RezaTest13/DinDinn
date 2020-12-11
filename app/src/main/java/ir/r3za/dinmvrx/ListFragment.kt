@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
+import com.google.android.material.appbar.AppBarLayout
 import ir.r3za.dinmvrx.base.BaseFragment
 import ir.r3za.dinmvrx.databinding.FragmentListBinding
+import kotlin.math.abs
 
 class ListFragment : BaseFragment() {
 
@@ -30,6 +32,14 @@ class ListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.appBarLayout.addOnOffsetChangedListener(
+            AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                if (abs(verticalOffset) - appBarLayout!!.totalScrollRange == 0) {
+                    binding.viewCart.show()
+                } else {
+                    binding.viewCart.hide()
+                }
+            })
         adapter.onAddClicked = {
             viewModel.addToCart(it)
         }
@@ -57,6 +67,7 @@ class ListFragment : BaseFragment() {
                 binding.tvTitle.text = topPagerEntity.title
                 binding.tvSubtitle.text = topPagerEntity.subtitle
             }
+            binding.viewCart.setCount(state.shoppingCartCount() ?: 0)
             if (state.categories.complete) {
                 if (binding.tabCategories.tabCount >= 1) {
                     return@withState

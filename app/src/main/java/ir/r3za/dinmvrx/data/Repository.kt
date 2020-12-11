@@ -33,4 +33,12 @@ object Repository {
             .observeOn(AndroidSchedulers.mainThread())
             .delay(1000, TimeUnit.MILLISECONDS)
     }
+
+    fun getShoppingCartCount(): Observable<Int> {
+        return Observable.fromCallable {
+            ShoppingCart.getCount()
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

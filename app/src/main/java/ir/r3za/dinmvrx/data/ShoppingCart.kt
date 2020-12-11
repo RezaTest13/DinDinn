@@ -16,4 +16,6 @@ object ShoppingCart {
         cartMap.remove(foodItem)
         return cartMap.toMap()
     }
+
+    fun getCount(): Int = cartMap.map{ it -> it.value }.sum()
 }

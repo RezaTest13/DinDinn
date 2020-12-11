@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="600dp">
 
@@ -107,5 +108,14 @@
         android:paddingBottom="?attr/actionBarSize"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         tools:listitem="@layout/item_food" />
+
+    <ir.r3za.dinmvrx.CartFab
+        android:id="@+id/view_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:visibility="gone"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="64dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

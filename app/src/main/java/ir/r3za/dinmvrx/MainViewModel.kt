@@ -14,10 +14,11 @@ data class MainState(
     val topLoading: Boolean = true,
     val categories: Async<List<FoodCategory>> = Uninitialized,
     val foodList: Async<List<FoodItem>> = Uninitialized,
+    val shoppingCartCount: Async<Int> = Uninitialized,
     val topPagerEntity: Async<TopPagerEntity> = Uninitialized,
 ) : MvRxState
 
-class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainState>(initialState) {
+class MainViewModel(initialState: MainState) : MvRxViewModel<MainState>(initialState) {
 
     init {
         fetchData()
@@ -47,6 +48,9 @@ class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainSta
 
     fun addToCart(foodItem: FoodItem) {
         ShoppingCart.addToCart(foodItem)
+        Repository.getShoppingCartCount().execute {
+             copy(shoppingCartCount = it)
+        }
     }
 
 }
