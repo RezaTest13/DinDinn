@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.airbnb.mvrx.fragmentViewModel
@@ -25,7 +26,7 @@ class ListFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,7 +48,9 @@ class ListFragment : BaseFragment() {
         binding.rvFoods.adapter = adapter
         (binding.rvFoods.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         binding.viewPagerTop.adapter = pagerAdapter
-
+        binding.viewCart.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_cartFragment)
+        }
     }
 
     override fun invalidate() {
