@@ -7,4 +7,5 @@
     <string name="value">Value:</string>
     <string name="delivery_description">Delivery is free</string>
     <string name="price_format">%s usd</string>
+    <string name="added_plus_one">added + 1</string>
 </resources>

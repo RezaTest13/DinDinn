@@ -42,7 +42,7 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.FoodsViewHolder>() {
         holder.bind(items[position])
     }
 
-    inner class FoodsViewHolder(val binding: ItemFoodBinding) :
+    inner class FoodsViewHolder(private val binding: ItemFoodBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -63,7 +63,7 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.FoodsViewHolder>() {
             binding.tvDescription.text = item.description
             binding.tvIngredients.text = item.specifications
             if (item.adding) {
-                binding.btnAdd.text = "added + 1"
+                binding.btnAdd.text = itemView.context.getString(R.string.added_plus_one)
                 binding.btnAdd.backgroundTintList = ColorStateList.valueOf(
                     ResourcesCompat.getColor(
                         itemView.context.resources,

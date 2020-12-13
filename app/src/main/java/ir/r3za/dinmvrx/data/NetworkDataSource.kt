@@ -18,7 +18,7 @@ class NetworkDataSource {
                     "120 gram",
                     "https://www.foodiesfeed.com/wp-content/uploads/2019/02/pizza-ready-for-baking-463x309.jpg",
                     BigDecimal(25),
-                    "pizza"
+                    "1"
                 ),
                 FoodItem(
                     2,
@@ -27,7 +27,7 @@ class NetworkDataSource {
                     "120 gram",
                     "https://www.foodiesfeed.com/wp-content/uploads/2019/05/colorful-healthy-fresh-berries-in-a-cup-1-463x695.jpg",
                     BigDecimal(40),
-                    "pizza"
+                    "1"
                 ),
                 FoodItem(
                     3,
@@ -36,7 +36,7 @@ class NetworkDataSource {
                     "120 gram",
                     "https://www.foodiesfeed.com/wp-content/uploads/2019/07/neapolitan-pizza-margherita-463x309.jpg",
                     BigDecimal(51),
-                    "pizza"
+                    "1"
                 ), FoodItem(
                     4,
                     "Sushi 1",
@@ -44,7 +44,7 @@ class NetworkDataSource {
                     "120 gram",
                     "https://cdn.cheapoguides.com/wp-content/uploads/sites/2/2017/08/9993631716_2b532586b3_b-1-770x514.jpg",
                     BigDecimal(51),
-                    "sushi"
+                    "1"
                 ), FoodItem(
                     5,
                     "Sushi 2",
@@ -52,7 +52,7 @@ class NetworkDataSource {
                     "120 gram",
                     "https://cdn.cheapoguides.com/wp-content/uploads/sites/2/2018/08/sashimi-2563650_1280-770x578.jpg",
                     BigDecimal(51),
-                    "sushi"
+                    "1"
                 )
             )
         )
@@ -75,10 +75,7 @@ class NetworkDataSource {
     fun getFoodCategories(): Observable<List<FoodCategory>> {
         return Observable.fromArray(
             listOf(
-                FoodCategory("1", "Pizza"),
-                FoodCategory("2", "Sushi"),
-                FoodCategory("3", "Drinks"),
-                FoodCategory("4", "Other"),
+                FoodCategory("1", "All")
             )
         )
     }

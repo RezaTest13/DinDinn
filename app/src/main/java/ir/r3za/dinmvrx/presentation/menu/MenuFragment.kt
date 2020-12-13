@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayout
 import ir.r3za.dinmvrx.R
 import ir.r3za.dinmvrx.base.BaseFragment
 import ir.r3za.dinmvrx.databinding.FragmentMenuBinding
@@ -53,18 +55,35 @@ class MenuFragment : BaseFragment() {
             navigateToCart()
         }
 
+        binding.tabCategories.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                viewModel.tabSelected(tab!!.tag as String)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+
+        viewModel.refreshCart()
+
+        binding.rvFoods.smoothScrollToPosition(0)
+
         setupObservers()
     }
 
     private fun navigateToCart() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, CartFragment::class.java, null, null)
             .setCustomAnimations(
                 R.anim.fade_in,
                 R.anim.fade_out,
                 R.anim.fade_in,
                 R.anim.fade_out
             )
+            .add(R.id.fragment_container, CartFragment::class.java, null, null)
             .addToBackStack(null)
             .commitAllowingStateLoss()
     }
@@ -114,7 +133,11 @@ class MenuFragment : BaseFragment() {
     }
 
     override fun invalidate() {
-
+        withState(viewModel) { it ->
+            if (it.shoppingCartCount is Success) {
+                binding.viewCart.setCount(it.shoppingCartCount() ?: 0)
+            }
+        }
     }
 
     override fun onDestroyView() {

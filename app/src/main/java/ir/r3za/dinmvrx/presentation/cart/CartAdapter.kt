@@ -40,7 +40,7 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         private val binding: ItemCartBinding,
         onDeleteClicked: (FoodItem) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        lateinit var currentItem: CartItem
+        private lateinit var currentItem: CartItem
 
         init {
             binding.ivDelete.setOnClickListener {

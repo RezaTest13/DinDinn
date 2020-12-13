@@ -13,11 +13,15 @@ object Repository {
 
     private val networkDataSource = NetworkDataSource()
 
-    fun getFoodItems(): Observable<List<FoodItem>> {
+    fun getFoodItems(slug: String? = null): Observable<List<FoodItem>> {
         return networkDataSource.getFoodItems()
+            .flatMap { Observable.fromIterable(it) }
+            .filter { it.category == slug }
+            .toList()
+            .toObservable()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .delay(1500, TimeUnit.MILLISECONDS)
+            .delay(500, TimeUnit.MILLISECONDS)
     }
 
     fun getTopPagerData(): Observable<TopPagerEntity> {
