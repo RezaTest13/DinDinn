@@ -3,9 +3,12 @@ package ir.r3za.dinmvrx
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class CartFab @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -14,6 +17,8 @@ class CartFab @JvmOverloads constructor(
     lateinit var tvCount: TextView
     lateinit var fabCart: FloatingActionButton
     private var size = 0
+    private val bounceAnimation: Animation =
+        AnimationUtils.loadAnimation(context, R.anim.bounce_animation)
 
     init {
         initView()
@@ -31,9 +36,13 @@ class CartFab @JvmOverloads constructor(
             tvCount.visibility = View.GONE
         } else {
             tvCount.text = size.toString()
-            if (visibility == View.VISIBLE) {
+            if (visibility == View.VISIBLE && tvCount.visibility != View.VISIBLE) {
                 tvCount.visibility = View.VISIBLE
             }
+            if (!bounceAnimation.hasEnded()) {
+                bounceAnimation.cancel()
+            }
+            tvCount.startAnimation(bounceAnimation)
         }
     }
 

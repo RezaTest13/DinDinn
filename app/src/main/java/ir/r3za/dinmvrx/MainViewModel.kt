@@ -18,7 +18,7 @@ data class MainState(
     val topPagerEntity: Async<TopPagerEntity> = Uninitialized,
 ) : MvRxState
 
-class MainViewModel(initialState: MainState) : MvRxViewModel<MainState>(initialState) {
+class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainState>(initialState) {
 
     init {
         fetchData()
@@ -27,21 +27,21 @@ class MainViewModel(initialState: MainState) : MvRxViewModel<MainState>(initialS
     private fun fetchData() {
         Repository.getTopPagerData()
             .doOnSubscribe {
-                setState { copy(topLoading = true) }
+                setState { initialState.copy(topLoading = true) }
             }
             .doOnComplete {
-                setState { copy(topLoading = false) }
+                setState { initialState.copy(topLoading = false) }
             }
             .execute {
-                copy(topPagerEntity = it)
+                initialState.copy(topPagerEntity = it)
             }
 
         Repository.getFoodItems().execute {
-            copy(foodList = it)
+            initialState.copy(foodList = it)
         }
 
         Repository.getFoodCategories().execute {
-            copy(categories = it)
+            initialState.copy(categories = it)
         }
 
     }
@@ -49,7 +49,7 @@ class MainViewModel(initialState: MainState) : MvRxViewModel<MainState>(initialS
     fun addToCart(foodItem: FoodItem) {
         ShoppingCart.addToCart(foodItem)
         Repository.getShoppingCartCount().execute {
-             copy(shoppingCartCount = it)
+            initialState.copy(shoppingCartCount = it)
         }
     }
 

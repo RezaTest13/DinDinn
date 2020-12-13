@@ -11,11 +11,12 @@
         android:layout_height="600dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@android:color/white"
-            app:scrimVisibleHeightTrigger="40dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:scrimVisibleHeightTrigger="40dp">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/view_pager_top"
@@ -32,10 +33,10 @@
                     android:id="@+id/pb_top"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <TextView
@@ -83,14 +84,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="16dp"
-                        android:paddingStart="@dimen/margin_normal"
                         android:clipToPadding="false"
+                        android:paddingStart="@dimen/margin_normal"
                         app:tabIndicatorHeight="0dp"
                         app:tabMode="scrollable"
                         app:tabRippleColor="@null"
-                        app:tabTextColor="@color/neutral_400"
                         app:tabSelectedTextColor="@android:color/black"
-                        app:tabTextAppearance="@style/CustomTabText"/>
+                        app:tabTextAppearance="@style/CustomTabText"
+                        app:tabTextColor="@color/neutral_400" />
 
                 </FrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -114,8 +115,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:visibility="gone"
         android:layout_marginRight="32dp"
-        android:layout_marginBottom="64dp"/>
+        android:layout_marginBottom="64dp"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

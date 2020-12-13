@@ -35,7 +35,7 @@ class ListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.appBarLayout.addOnOffsetChangedListener(
             AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-                if (abs(verticalOffset) - appBarLayout!!.totalScrollRange == 0) {
+                if (abs(verticalOffset) > 20) {
                     binding.viewCart.show()
                 } else {
                     binding.viewCart.hide()
