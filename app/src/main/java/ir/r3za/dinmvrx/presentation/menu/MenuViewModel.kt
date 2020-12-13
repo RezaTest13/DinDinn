@@ -24,7 +24,7 @@ class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainSta
         fetchData()
     }
 
-    private fun fetchData() {
+    private fun fetchData() = withState {
         Repository.getTopPagerData()
             .doOnSubscribe {
                 setState { initialState.copy(topLoading = true) }
@@ -46,7 +46,7 @@ class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainSta
 
     }
 
-    fun addToCart(foodItem: FoodItem) {
+    fun addToCart(foodItem: FoodItem) = withState {
         ShoppingCart.addToCart(foodItem)
         Repository.getShoppingCartCount().execute {
             initialState.copy(shoppingCartCount = it)

@@ -19,7 +19,7 @@ class MenuFragment : BaseFragment() {
 
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by fragmentViewModel(MainViewModel::class)
+    private val viewModel: MainViewModel by fragmentViewModel()
     private val adapter = FoodsAdapter()
     private val pagerAdapter = TopPagerAdapter()
 
@@ -35,7 +35,7 @@ class MenuFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.appBarLayout.addOnOffsetChangedListener(
-            AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
                 if (abs(verticalOffset) > 20) {
                     binding.viewCart.show()
                 } else {
@@ -72,7 +72,7 @@ class MenuFragment : BaseFragment() {
     private fun setupObservers() {
         viewModel.selectSubscribe(this, MainState::categories) {
             if (it is Success) {
-                it()?.forEach { foodCategory ->
+                it().forEach { foodCategory ->
                     binding.tabCategories.addTab(
                         binding.tabCategories.newTab()
                             .setText(foodCategory.title)

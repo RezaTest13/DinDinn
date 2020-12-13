@@ -3,6 +3,7 @@ package ir.r3za.dinmvrx.data
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import ir.r3za.dinmvrx.data.model.CartItem
 import ir.r3za.dinmvrx.data.model.FoodCategory
 import ir.r3za.dinmvrx.data.model.FoodItem
 import ir.r3za.dinmvrx.data.model.TopPagerEntity
@@ -37,6 +38,14 @@ object Repository {
     fun getShoppingCartCount(): Observable<Int> {
         return Observable.fromCallable {
             ShoppingCart.getCount()
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun removeFromCart(foodItem: FoodItem): Observable<List<CartItem>> {
+        return Observable.fromCallable {
+            ShoppingCart.removeFromCart(foodItem)
         }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
