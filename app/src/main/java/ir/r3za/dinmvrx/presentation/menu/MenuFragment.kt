@@ -1,4 +1,4 @@
-package ir.r3za.dinmvrx
+package ir.r3za.dinmvrx.presentation.menu
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +10,15 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.google.android.material.appbar.AppBarLayout
+import ir.r3za.dinmvrx.MainViewModel
+import ir.r3za.dinmvrx.R
 import ir.r3za.dinmvrx.base.BaseFragment
-import ir.r3za.dinmvrx.databinding.FragmentListBinding
+import ir.r3za.dinmvrx.databinding.FragmentMenuBinding
 import kotlin.math.abs
 
-class ListFragment : BaseFragment() {
+class MenuFragment : BaseFragment() {
 
-    private var _binding: FragmentListBinding? = null
+    private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by fragmentViewModel()
     private val adapter = FoodsAdapter()
@@ -27,7 +29,7 @@ class ListFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentListBinding.inflate(inflater, container, false)
+        _binding = FragmentMenuBinding.inflate(inflater, container, false)
         return binding.root
     }
 

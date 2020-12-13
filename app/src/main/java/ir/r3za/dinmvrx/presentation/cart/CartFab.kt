@@ -1,4 +1,4 @@
-package ir.r3za.dinmvrx
+package ir.r3za.dinmvrx.presentation.cart
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import ir.r3za.dinmvrx.R
 
 
 class CartFab @JvmOverloads constructor(

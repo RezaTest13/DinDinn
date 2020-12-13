@@ -1,4 +1,4 @@
-package ir.r3za.dinmvrx
+package ir.r3za.dinmvrx.presentation.menu
 
 import android.content.res.ColorStateList
 import android.os.Handler
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import ir.r3za.dinmvrx.R
 import ir.r3za.dinmvrx.data.model.FoodItem
 import ir.r3za.dinmvrx.databinding.ItemFoodBinding
 import java.math.BigDecimal

@@ -1,4 +1,4 @@
-package ir.r3za.dinmvrx
+package ir.r3za.dinmvrx.presentation.menu
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

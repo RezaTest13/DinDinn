@@ -110,7 +110,7 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         tools:listitem="@layout/item_food" />
 
-    <ir.r3za.dinmvrx.CartFab
+    <ir.r3za.dinmvrx.presentation.cart.CartFab
         android:id="@+id/view_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
