@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import ir.r3za.dinmvrx.R
 import ir.r3za.dinmvrx.data.model.FoodItem
 import ir.r3za.dinmvrx.databinding.ItemFoodBinding
+import ir.r3za.dinmvrx.presentation.formattedPrice
 import java.math.BigDecimal
 
 class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.FoodsViewHolder>() {
@@ -76,7 +77,7 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.FoodsViewHolder>() {
                         itemView.context.theme
                     )
                 )
-                binding.btnAdd.text = "${item.price.setScale(1, BigDecimal.ROUND_HALF_UP)} USD"
+                binding.btnAdd.text = item.price.formattedPrice(itemView.context)
             }
             Glide.with(itemView.context).load(item.imageUrl).into(binding.ivFood)
         }

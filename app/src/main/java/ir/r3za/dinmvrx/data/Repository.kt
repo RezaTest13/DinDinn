@@ -24,14 +24,14 @@ object Repository {
         return networkDataSource.getTopPagerData()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .delay(1000, TimeUnit.MILLISECONDS)
+            .delay(2000, TimeUnit.MILLISECONDS)
     }
 
     fun getFoodCategories(): Observable<List<FoodCategory>> {
         return networkDataSource.getFoodCategories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .delay(1000, TimeUnit.MILLISECONDS)
+            .delay(800, TimeUnit.MILLISECONDS)
     }
 
     fun getShoppingCartCount(): Observable<Int> {

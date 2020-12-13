@@ -4,23 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.fragmentViewModel
-import com.airbnb.mvrx.withState
 import com.google.android.material.appbar.AppBarLayout
-import ir.r3za.dinmvrx.MainViewModel
 import ir.r3za.dinmvrx.R
 import ir.r3za.dinmvrx.base.BaseFragment
 import ir.r3za.dinmvrx.databinding.FragmentMenuBinding
+import ir.r3za.dinmvrx.presentation.cart.CartFragment
 import kotlin.math.abs
 
 class MenuFragment : BaseFragment() {
 
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by fragmentViewModel()
+    private val viewModel: MainViewModel by fragmentViewModel(MainViewModel::class)
     private val adapter = FoodsAdapter()
     private val pagerAdapter = TopPagerAdapter()
 
@@ -51,33 +50,29 @@ class MenuFragment : BaseFragment() {
         (binding.rvFoods.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         binding.viewPagerTop.adapter = pagerAdapter
         binding.viewCart.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_cartFragment)
+            navigateToCart()
         }
+
+        setupObservers()
     }
 
-    override fun invalidate() {
-        withState(viewModel) { state ->
-            if (state.foodList.complete) {
-                adapter.updateItems(state.foodList()!!)
-            }
-            if (state.topLoading) {
-                binding.pbTop.visibility = View.VISIBLE
-            } else {
-                binding.pbTop.visibility = View.GONE
-            }
-            if (state.topPagerEntity.complete) {
-                val topPagerEntity = state.topPagerEntity()!!
-                pagerAdapter.updateItems(topPagerEntity.imageUrls)
-                binding.pagerIndicator.setViewPager(binding.viewPagerTop)
-                binding.tvTitle.text = topPagerEntity.title
-                binding.tvSubtitle.text = topPagerEntity.subtitle
-            }
-            binding.viewCart.setCount(state.shoppingCartCount() ?: 0)
-            if (state.categories.complete) {
-                if (binding.tabCategories.tabCount >= 1) {
-                    return@withState
-                }
-                state.categories()!!.forEach { foodCategory ->
+    private fun navigateToCart() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, CartFragment::class.java, null, null)
+            .setCustomAnimations(
+                R.anim.fade_in,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.fade_out
+            )
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
+    }
+
+    private fun setupObservers() {
+        viewModel.selectSubscribe(this, MainState::categories) {
+            if (it is Success) {
+                it()?.forEach { foodCategory ->
                     binding.tabCategories.addTab(
                         binding.tabCategories.newTab()
                             .setText(foodCategory.title)
@@ -86,6 +81,40 @@ class MenuFragment : BaseFragment() {
                 }
             }
         }
+
+        viewModel.selectSubscribe(this, MainState::shoppingCartCount) {
+            if (it is Success) {
+                binding.viewCart.setCount(it())
+            }
+        }
+
+        viewModel.selectSubscribe(this, MainState::foodList) {
+            if (it is Success) {
+                adapter.updateItems(it())
+            }
+        }
+
+        viewModel.selectSubscribe(this, MainState::topLoading) {
+            if (it) {
+                binding.pbTop.visibility = View.VISIBLE
+            } else {
+                binding.pbTop.visibility = View.GONE
+            }
+        }
+
+        viewModel.selectSubscribe(this, MainState::topPagerEntity) {
+            if (it is Success) {
+                val topPagerEntity = it()
+                pagerAdapter.updateItems(topPagerEntity.imageUrls)
+                binding.pagerIndicator.setViewPager(binding.viewPagerTop)
+                binding.tvTitle.text = topPagerEntity.title
+                binding.tvSubtitle.text = topPagerEntity.subtitle
+            }
+        }
+    }
+
+    override fun invalidate() {
+
     }
 
     override fun onDestroyView() {

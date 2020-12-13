@@ -1,4 +1,4 @@
-package ir.r3za.dinmvrx
+package ir.r3za.dinmvrx.presentation.menu
 
 import com.airbnb.mvrx.Async
 import com.airbnb.mvrx.MvRxState
@@ -11,11 +11,11 @@ import ir.r3za.dinmvrx.data.model.FoodItem
 import ir.r3za.dinmvrx.data.model.TopPagerEntity
 
 data class MainState(
-    val topLoading: Boolean = true,
+    val topLoading: Boolean = false,
     val categories: Async<List<FoodCategory>> = Uninitialized,
     val foodList: Async<List<FoodItem>> = Uninitialized,
     val shoppingCartCount: Async<Int> = Uninitialized,
-    val topPagerEntity: Async<TopPagerEntity> = Uninitialized,
+    val topPagerEntity: Async<TopPagerEntity> = Uninitialized
 ) : MvRxState
 
 class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainState>(initialState) {
@@ -29,11 +29,11 @@ class MainViewModel(private val initialState: MainState) : MvRxViewModel<MainSta
             .doOnSubscribe {
                 setState { initialState.copy(topLoading = true) }
             }
-            .doOnComplete {
+            .doOnError {
                 setState { initialState.copy(topLoading = false) }
             }
             .execute {
-                initialState.copy(topPagerEntity = it)
+                initialState.copy(topPagerEntity = it, topLoading = false)
             }
 
         Repository.getFoodItems().execute {
