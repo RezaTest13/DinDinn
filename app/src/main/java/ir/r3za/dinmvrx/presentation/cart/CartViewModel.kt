@@ -12,7 +12,7 @@ data class CartState(
     val totalPrice: BigDecimal = BigDecimal.ZERO
 ) : MvRxState
 
-class CartViewModel(private val initialState: CartState) : MvRxViewModel<CartState>(initialState) {
+class CartViewModel(initialState: CartState) : MvRxViewModel<CartState>(initialState) {
 
     init {
         setState {

@@ -2,6 +2,7 @@ package ir.r3za.dinmvrx.presentation.cart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ir.r3za.dinmvrx.data.model.CartItem
@@ -15,9 +16,11 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
     var onDeleteClicked: (FoodItem) -> Unit = {}
 
     fun updateItems(cart: List<CartItem>) {
+        val diffCallback = CartDiffCallback(items, cart)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         items.clear()
         items.addAll(cart)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
@@ -53,5 +56,26 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
                 .formattedPrice(itemView.context)
 
         }
+    }
+
+    class CartDiffCallback(
+        private val oldList: List<CartItem>,
+        private val newList: List<CartItem>
+    ) : DiffUtil.Callback() {
+        override fun getOldListSize(): Int = oldList.size
+
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].foodItem.id == newList[newItemPosition].foodItem.id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            if (oldList[oldItemPosition].count == newList[newItemPosition].count) {
+                return true
+            }
+            return false
+        }
+
     }
 }

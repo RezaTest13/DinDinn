@@ -30,6 +30,9 @@ class CartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rvCart.layoutManager = LinearLayoutManager(context)
         binding.rvCart.adapter = cartAdapter
+        binding.tvBack.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
         cartAdapter.onDeleteClicked = { foodItem ->
             withState(viewModel) { viewModel.deleteFoodItem(foodItem) }
         }

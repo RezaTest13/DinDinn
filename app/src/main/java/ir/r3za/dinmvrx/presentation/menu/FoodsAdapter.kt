@@ -5,21 +5,23 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ir.r3za.dinmvrx.R
 import ir.r3za.dinmvrx.data.model.FoodItem
 import ir.r3za.dinmvrx.databinding.ItemFoodBinding
 import ir.r3za.dinmvrx.presentation.formattedPrice
-import java.math.BigDecimal
 
 class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.FoodsViewHolder>() {
     private val items: MutableList<FoodItem> = mutableListOf()
 
     fun updateItems(newItems: List<FoodItem>) {
+        val diffCallback = FoodDiffCallback(items, newItems)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         items.clear()
         items.addAll(newItems)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     var onAddClicked: (FoodItem) -> Unit = {}
@@ -81,5 +83,23 @@ class FoodsAdapter : RecyclerView.Adapter<FoodsAdapter.FoodsViewHolder>() {
             }
             Glide.with(itemView.context).load(item.imageUrl).into(binding.ivFood)
         }
+    }
+
+    class FoodDiffCallback(
+        private val oldList: List<FoodItem>,
+        private val newList: List<FoodItem>
+    ) : DiffUtil.Callback() {
+        override fun getOldListSize(): Int = oldList.size
+
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+
     }
 }
